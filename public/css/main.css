@@ -1,0 +1,66 @@
+body{ height:100vh; overflow: hidden; padding-top:14vh; font-family: 'Arvo', serif;
+}
+
+#grad {
+    background: -webkit-linear-gradient(#563D7D, #6E5398); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#563D7D, #6E5398); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#563D7D, #6E5398); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#563D7D, #6E5398); /* Standard syntax */
+}
+.log_reg{width:30vw; margin:19vh 35vw; padding:2vw; padding-bottom:1vh;
+    background: rgba(244,244,244,0.1);}
+.nav-tabs li{width:13vw; color:#eef;}
+.nav-tabs li a{width:13vw; color:#fff; text-shadow:1px 1px 1px #222; font-size:15px;}
+.nav-tabs li a:hover{width:13vw; color:#fff; background:#563D7D;  text-shadow:1px 1px 1px #111; border:1px solid #563D7D; font-size:15px;}
+.active a{ color:#fff!important; background:#563D7D!important;  text-shadow:1px 1px 1px #111; border:1px solid #563D7D!important; font-size:15px;}
+.control-label{color:#fff; text-shadow:1px 1px 1px #111; font-size:15px;}
+.icons{font-size: 25px!important; margin-left:-5px; margin-top:-5px;}
+#logo{ border-radius: 15vw;
+    -webkit-animation: myfirst 1.4s linear 1s infinite alternate; /* Chrome, Safari, Opera */animation: myfirst 1.4s linear 1s infinite alternate;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes myfirst {
+    from {opacity:1}
+    to {opacity:0.7}
+}
+
+/* Standard syntax */
+@keyframes myfirst {
+    from {opacity:0.7}
+    to {opacity:1}
+}
+.suggestion_para{list-style:none; width:36vw; margin:10vh 36vw; padding:2vw 5vh; color:#f9f9f9; font-size:40px; font-family: 'Cookie', cursive;}
+
+.log_social{list-style:none; border-radius:5vw; display:inline-block; width:60vw; margin:-30vh 20vw; padding:2vw 5vh; background: rgba(244,244,244,0.1);}
+.chobi{height:62px; width:62px; border-radius:31px; margin-top:-4px; box-shadow:0px 0px 0px #335; margin-right:41px; margin-left:42px;
+        transition: height 0.4s, width 0.4s, margin-top 0.4s, margin-right 0.4s, margin-left 0.4s,  box-shadow 0.4s;}
+.chobi:hover{height:64px; width:64px; margin-top:-6px; margin-right:40px; margin-left:41px; box-shadow:-4px 4px 4px #446;}
+
+.header{margin:0px; height:9vh!important; width:100%; margin-top:-90px; margin-left: 5px!important;}
+.dash_thumbnail{width:100%; margin:0px;}
+.thum_image{width:100%;margin-top:5px; border:3px solid #d0d0d0!important; transition:border 0.6s;}
+.thum_image:hover{width:100%;margin-top:5px; border:3px solid #aaa!important;}
+.dash_contents{height:92vh; width:80vw; background:#ddd; padding-left:25px;padding-top:5px;}
+.dash_contents > .nav-tabs li a{width: 100px; margin:0px 1px;color:#101; border-radius:8px; text-shadow: 0px 0px 0px #111; text-align:center; font-size:15px; transition: background 0.5s,color 0.5s;}
+.dash_contents > .nav-tabs li a:hover{width: 100px; color:#fff; background:#00A5CF; border-radius:8px; border:1px solid #00A5CF; font-size:15px;}
+.dash_contents > .nav-tabs > .active a{ color:#fff!important; background:#00A5CF!important; border:1px solid #00A5CF!important; font-size:15px;}
+.dash_tab_content{width:71vw; padding:10px; font-size:20px; line-height: 68px;font-family: 'Cookie', cursive;}
+.dash_label{margin-top:10px;}
+.chobigulo{height:50px; width:50px; border-radius:25px; margin-top:9px; box-shadow:0px 0px 0px #335; margin-right:51px; margin-left:1px;
+    transition: height 0.4s, width 0.4s, margin-top 0.4s, margin-right 0.4s, margin-left 0.4s,  box-shadow 0.4s;}
+.chobigulo:hover{height:52px; width:52px; margin-top:7px; margin-right:50px; margin-left:0px; box-shadow:-4px 4px 4px #446;}
+
+.dash_input{ border:none; outline:none; height:29px; padding-left:5px; width:215px; border-bottom:1px dashed #777; background: #ddd;color:#000; transition: width 0.5s;}
+.dash_input:focus{outline: 0px; width:295px; padding-left:1px;}
+
+::-webkit-scrollbar {width: 10px; z-index:10000; margin-right:10px!important;}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+	background:#999;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
