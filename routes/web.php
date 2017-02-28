@@ -14,7 +14,41 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Auth::routes();
+Route::get('/logout', function()
+{
+    Auth::logout();
+    Session::forget('users_id');
+    Session::flush();
+    return Redirect::to('/do_login');
+});
 
-Route::resource('new_users', 'Login_controller');
-Route::get('/login', 'Login_controller@index');
-Route::post('/add_user', 'Login_controller@store');
+Route::get('/menu', array('before' => 'auth.basic', function()
+{
+    if (Auth::check()) {
+        return Redirect::to('/user_menu');
+    } else {
+        return Redirect::to('/do_login');
+    }
+
+}));
+
+Route::get('/social_auth', array('before' => 'auth.basic', function()
+{
+    if (Auth::check()) {
+        return Redirect::to('/social_auth');
+    } else {
+        return Redirect::to('/do_login');
+    }
+
+}));
+
+
+
+Route::get('/social_auth', 'HomeController@index');
+//Route::post('/login', 'Auth\LoginController@login');
+//Route::post('/logut', 'Auth\LoginController@logout');
+//Route::post('/register', 'Auth\RegisterController@register');
+Route::get('/user_menu', 'HomeController@user_menu');
+Route::get('/do_login', 'HomeController@do_login');
+Route::post('/socialInfo', 'HomeController@social_info');

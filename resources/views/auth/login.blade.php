@@ -31,22 +31,28 @@
 
 	<div class="tab-content">
 		<div id="home" class="tab-pane fade in active">
-			<div class="alert alert-" ng-if="msg">
-				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-
-			</div>
-			<form class="form-horizontal" role="form" method="post" action="">
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+			<form class="form-horizontal" role="form"  method="post" action="{{'login'}}">
+                {{csrf_field()}}
 				<div class="form-group">
 
 					<label class="control-label col-sm-2" for="email"><i class="fa fa-envelope icons"></i></label>
 					<div class="col-sm-10">
-						<input type="email" class="form-control" ng-model="users_email" id="email" placeholder="Enter email">
+						<input type="email" class="form-control" name="users_email" value="{{ old('users_email') }}" placeholder="Enter email">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="pwd"><i class="fa fa-lock icons"></i></label>
 					<div class="col-sm-10">
-						<input type="password" class="form-control" ng-model="user.users_password" id="pwd" placeholder="Enter password">
+						<input type="password" class="form-control" name="users_password" value="{{ old('users_password') }}" placeholder="Enter password">
 
 					</div>
 				</div>
@@ -56,28 +62,35 @@
 						<a class="pull-rsssight" href="" style="color:#ddd; text-shadow:1px 1px 1px #111; background:none!important; border:0px!important;">Forgot password?</a>
 					</div>
 					<div class="col-sm-5">
-						<button type="submit" style="color:#563D7D" class="btn btn-default pull-right" ng-click="login()" ><b>Log In</b></button>
+						<button type="submit" style="color:#563D7D" class="btn btn-default pull-right" ><b>Log In</b></button>
 					</div>
 				</div>
 			</form>
 		</div>
 		<div id="menu1" class="tab-pane fade">
-			<div class="alert alert-}" ng-if="msg">
-				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			@if (count($errors) > 0)
+				<div class="alert alert-danger">
+					<ul>
+						@foreach ($errors->all() as $error)
+							<li>{{ $error }}</li>
+						@endforeach
+					</ul>
+				</div>
+			@endif
 
-			</div>
-			<form class="form-horizontal" role="form"  method="post" action="add_user">
+			<form class="form-horizontal" role="form"  method="post" action="{{ route('register') }}">
 				{{csrf_field()}}
+
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="name"><i class="fa fa-user icons"></i></label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="users_name" id="name" placeholder="Full Name">
+						<input type="text" class="form-control" name="users_name" id="name" value="{{ old('users_name') }}" placeholder="Full Name">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="email"><i class="fa fa-envelope icons"></i></label>
 					<div class="col-sm-10">
-						<input type="email" class="form-control" name="users_email" id="email_reg" placeholder="Enter email">
+						<input type="email" class="form-control" name="users_email" id="email_reg" value="{{ old('users_email') }}" placeholder="Enter email">
 					</div>
 				</div>
 				<div class="form-group">
@@ -85,6 +98,14 @@
 					<label class="control-label col-sm-2" for="pwd"><i class="fa fa-lock icons"></i></label>
 					<div class="col-sm-10">
 						<input type="password" class="form-control"  name="users_password" id="pwd_reg" placeholder="Enter password">
+
+					</div>
+				</div>
+				<div class="form-group">
+
+					<label class="control-label col-sm-2" for="pwd"><i class="fa fa-lock icons"></i></label>
+					<div class="col-sm-10">
+						<input type="password" class="form-control"  name="users_password_confirmation" id="pwd_reg" placeholder="Retype password">
 
 					</div>
 				</div>

@@ -162,10 +162,12 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+
         Jenssegers\Mongodb\MongodbServiceProvider::class,
-        //Moloquent\MongodbServiceProvider::class,
-        //Moloquent\Auth\PasswordResetServiceProvider::class,
-        //Moloquent\MongodbQueueServiceProvider::class,
+        //Jenssegers\Mongodb\Session\SessionServiceProvider::class,
+        Jenssegers\Mongodb\Auth\PasswordResetServiceProvider::class,
+
+
 
 
         /*
@@ -231,6 +233,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Moloquent' => 'Jenssegers\Mongodb\Eloquent\Model',
+
 
 
     ],

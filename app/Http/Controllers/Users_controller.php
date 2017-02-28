@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Users_model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
-class Login_controller extends Controller
+class Users_controller extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,7 @@ class Login_controller extends Controller
      */
     public function index()
     {
-        return view('users.login');
+        return view('auth.login');
     }
 
     /**
@@ -37,6 +38,7 @@ class Login_controller extends Controller
      */
     public function store(Request $request)
     {
+
         $getTable = new Users_model;
         $getTable->users_name = $request->input('users_name');
         $getTable->users_email = $request->input('users_email');
@@ -45,6 +47,7 @@ class Login_controller extends Controller
 
         return view('users.social_login');
     }
+
 
     /**
      * Display the specified resource.

@@ -72,30 +72,41 @@
             document.getElementById("fb_name").value = response.name;
         });
     }
+    //calling facebook login function
+    $(function () {
+        $("#login").click(function () {
+           login();
+        });
+    });
 </script>
 
-<img id="logo" src="../assets/img/jj.png" style="position:fixed; left:45vw; top: 9.5vh; height:9.5vw; width:10vw;">
+<img id="logo" src="img/jj.png" style="position:fixed; left:45vw; top: 9.5vh; height:9.5vw; width:10vw;">
 
 <div style="margin-top:15vh;">
-
+    <form method="post"action="socialInfo">
+        {{csrf_field()}}
     <p class="suggestion_para">Connect  To Your Accounts</p>
     <ul class="log_social">
 
-        <div id="status"></div>
+    <div id="status"></div>
+    <?php $id = session('users_id')?>
+    </tr>
 
-        </tr>
-        <input type="text" id ="fb_user" ng-model="social.users_id">
-        <input type="hidden" id ="fb_id" ng-model="social.users_fb_id" value="">
-        <input type="hidden" id ="fb_name" ng-model="social.users_fb_name" value="">
-       <li style="list-style:none; display:inline-block;"> <button onclick="login()" id="login"><img src="../assets/img/Facebook.png" class="chobi"></button> </li>
-         <li style="list-style:none; display:inline-block;"><img src="../assets/img/googleplus.png" class="chobi"> </li>
-         <li style="list-style:none; display:inline-block;"><img src="../assets/img/twitter.png" class="chobi"> </li>
-         <li style="list-style:none; display:inline-block;"><img src="../assets/img/instagram.png" class="chobi"> </li>
-         <li style="list-style:none; display:inline-block;"><img src="../assets/img/wordPress.png" class="chobi"> </li>
+    <input type="hidden" id ="fb_user" name="users_id" value ="{{$id}}">
+    <input type="hidden" id ="fb_id" name="users_fb_id" value="">
+    <input type="hidden" id ="fb_name" name="users_fb_name" value="">
+    <li style="list-style:none; display:inline-block;"><img src="img/Facebook.png"  id="login" class="chobi"> </li>
+    <li style="list-style:none; display:inline-block;"><img src="img/googleplus.png" class="chobi"> </li>
+    <li style="list-style:none; display:inline-block;"><img src="img/twitter.png" class="chobi"> </li>
+    <li style="list-style:none; display:inline-block;"><img src="img/instagram.png" class="chobi"> </li>
+    <li style="list-style:none; display:inline-block;"><img src="img/wordPress.png" class="chobi"> </li>
 
     </ul>
-<br><br><br><br>
-    <button class="btn btn-info text-center" style="border-radius:5vh; width:9vw; height:6vh; margin:5vh 45.5vw; text-shadow:1px 1px 1px #355;" ng-click="socialAuth()" > <b>Done</b> </button>
+    <br><br><br><br>
+    <button type="submit" class="btn btn-info text-center" style="border-radius:5vh; width:9vw; height:6vh; margin:5vh 45.5vw; text-shadow:1px 1px 1px #355;" > <b>Done</b> </button>
+</form>
+
+
     <button class="btn btn-default text-center" style=" color:#6A4F94; border-radius:5vh; width:9vw; height:6vh; margin:-12vh 45.5vw;"> <b>Skip</b> </button>
 
 </div>
