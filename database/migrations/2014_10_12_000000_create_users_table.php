@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $collection->string('users_password');
             $collection->string('users_fb_id')->default(null);
             $collection->string('users_fb_name')->default(null);
+            $collection->string('users_fb_photo')->default(null);
             $collection->rememberToken();
             $collection->timestamps();
         });

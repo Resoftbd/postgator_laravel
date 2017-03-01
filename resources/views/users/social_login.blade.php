@@ -67,11 +67,14 @@
 
     // getting basic user info
     function getInfo() {
-        FB.api('/me', function(response) {
+        FB.api('/me', {fields: "id,name,picture"},function(response) {
             document.getElementById("fb_id").value = response.id;
             document.getElementById("fb_name").value = response.name;
+            var im = document.getElementById("profileImage").setAttribute("src", "http://graph.facebook.com/" + response.id + "/picture?type=normal");
+            document.getElementById("fb_photo").value = im;
         });
     }
+
     //calling facebook login function
     $(function () {
         $("#login").click(function () {
@@ -95,6 +98,7 @@
     <input type="hidden" id ="fb_user" name="users_id" value ="{{$id}}">
     <input type="hidden" id ="fb_id" name="users_fb_id" value="">
     <input type="hidden" id ="fb_name" name="users_fb_name" value="">
+    <input type="hidden" id ="fb_photo" name="users_fb_photo" value="">
     <li style="list-style:none; display:inline-block;"><img src="img/Facebook.png"  id="login" class="chobi"> </li>
     <li style="list-style:none; display:inline-block;"><img src="img/googleplus.png" class="chobi"> </li>
     <li style="list-style:none; display:inline-block;"><img src="img/twitter.png" class="chobi"> </li>

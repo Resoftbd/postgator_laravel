@@ -88,6 +88,7 @@ class HomeController extends Controller
         DB::collection('users')->where('_id', $id)
             ->update([
                 'users_fb_name' => $request->input('users_fb_name'),
+                'users_fb_photo' => $request->input('users_fb_photo'),
                 'users_fb_id' => $request->input('users_fb_id')
 
             ]);
