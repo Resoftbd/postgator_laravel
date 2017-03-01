@@ -67,11 +67,11 @@
 
     // getting basic user info
     function getInfo() {
-        FB.api('/me', {fields: "id,name,picture"},function(response) {
+        FB.api('/me', 'GET', {fields: 'name,id,picture.width(150).height(150)'}, function(response) {
             document.getElementById("fb_id").value = response.id;
             document.getElementById("fb_name").value = response.name;
-            var im = document.getElementById("profileImage").setAttribute("src", "http://graph.facebook.com/" + response.id + "/picture?type=normal");
-            document.getElementById("fb_photo").value = im;
+            //var im = document.getElementById("profileImage").setAttribute("src", "http://graph.facebook.com/" + response.id + "/picture?type=normal");
+            document.getElementById("fb_photo").value = response.picture.data.url;
         });
     }
 
@@ -111,7 +111,7 @@
 </form>
 
 
-    <button class="btn btn-default text-center" style=" color:#6A4F94; border-radius:5vh; width:9vw; height:6vh; margin:-12vh 45.5vw;"> <b>Skip</b> </button>
+  <a href ="dashboard">  <button class="btn btn-default text-center" style=" color:#6A4F94; border-radius:5vh; width:9vw; height:6vh; margin:-12vh 45.5vw;"> <b>Skip</b> </button></a>
 
 </div>
 

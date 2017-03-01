@@ -7,7 +7,10 @@
 @endsection
 
 @section('content')
+
 <div class="dashboard_body row">
+    @foreach($user as $data)
+        {{$data['users_name']}}}
     <div class="col-xs-3 row" style="height:92vh;overflow-y: scroll; background:#fafafa; z-index:1000">
         <div class="col-xs-6" style=" padding-left:20px!important; padding-right:0px;">
             <div class="dash_thumbnail">
@@ -138,7 +141,7 @@
     </div>
 </div>
 
-
+@endforeach
 
 </body>
 </html>

@@ -13,7 +13,7 @@
     <script type="text/javascript" src="{{asset('css/bootstrap.js')}}"></script>
     <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
     <link href="{{asset('assets/font-awesome/css/font-awesome.min.css')}}'" rel="stylesheet" type="text/css">
-    <script type="text/javaScript" src="../controllers/user.client.controller.js"></script>
+
 
 
 </head>
@@ -22,15 +22,16 @@
 <body >
 
 @section('header')
+    @foreach($user as $data)
 <div class="header row">
     <div class="col-xs-6">
-        <img src="../assets/img/jj.png" style="height:4vw; width:4vw; padding:0.5vw; border-radius:2vw;">
+        <img src="img/jj.png" style="height:4vw; width:4vw; padding:0.5vw; border-radius:2vw;">
     </div>
     <div class="col-xs-6">
-        <img src="../assets/img/bene.jpg" class="pull-right" style="height:4vw; width:4vw; padding:0.5vw; border-radius:2vw;">
+        <img src="{{$data['users_fb_photo']}}" class="pull-right" style="height:4vw; width:4vw; padding:0.5vw; border-radius:2vw;">
     </div>
 </div>
-
+@endforeach
 @show
 
 @yield('content')

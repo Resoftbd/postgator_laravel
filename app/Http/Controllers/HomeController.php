@@ -76,6 +76,7 @@ class HomeController extends Controller
     }
 
 **/
+
     public function user_menu()
     {
         return view('users.menu');
@@ -93,9 +94,14 @@ class HomeController extends Controller
 
             ]);
 
-        $user = DB::collection('users')->get();
-
+        return redirect()->action('HomeController@dashboard');
+    }
+    public function dashboard()
+    {
+        $id = session('users_id');
+        $user = DB::collection('users')->where('_id',$id)->get();
         return view('users.userDashboard', compact('user'));
+
     }
 
 }

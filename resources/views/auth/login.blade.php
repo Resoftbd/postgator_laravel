@@ -46,13 +46,13 @@
 
 					<label class="control-label col-sm-2" for="email"><i class="fa fa-envelope icons"></i></label>
 					<div class="col-sm-10">
-						<input type="email" class="form-control" name="users_email" value="{{ old('users_email') }}" placeholder="Enter email">
+						<input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Enter email">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="pwd"><i class="fa fa-lock icons"></i></label>
 					<div class="col-sm-10">
-						<input type="password" class="form-control" name="users_password" value="{{ old('users_password') }}" placeholder="Enter password">
+						<input type="password" class="form-control" name="password" value="{{ old('password') }}" placeholder="Enter password">
 
 					</div>
 				</div>

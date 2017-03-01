@@ -46,9 +46,11 @@ Route::get('/social_auth', array('before' => 'auth.basic', function()
 
 
 Route::get('/social_auth', 'HomeController@index');
+Route::post('/user_auth', 'HomeController@user_auth');
 //Route::post('/login', 'Auth\LoginController@login');
 //Route::post('/logut', 'Auth\LoginController@logout');
 //Route::post('/register', 'Auth\RegisterController@register');
 Route::get('/user_menu', 'HomeController@user_menu');
 Route::get('/do_login', 'HomeController@do_login');
 Route::post('/socialInfo', 'HomeController@social_info');
+Route::get('/dashboard', 'HomeController@dashboard');
