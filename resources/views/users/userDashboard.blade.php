@@ -7,10 +7,88 @@
 @endsection
 
 @section('content')
+    <script>
+        // initialize and setup facebook js sdk
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '1893798254237418',
+                xfbml      : true,
+                version    : 'v2.8'
+            });
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                  //  document.getElementById('status').innerHTML = 'We are connected.';
+                   // document.getElementById('login').style.visibility = 'hidden';
+                } else if (response.status === 'not_authorized') {
+                   // document.getElementById('status').innerHTML = 'We are not logged in.'
+                } else {
+                  //  document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
+                }
+            });
+        };
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+        function fb_login() {
+            FB.login(function(response) {
+                if (response.status === 'connected') {
+                    // document.getElementById('status').innerHTML = 'We are connected.';
+                    document.getElementById('post_fb_text').src="img/fb2.png";
+                    getInfo();
+                } else if (response.status === 'not_authorized') {
+                   // document.getElementById('status').innerHTML = 'We are not logged in.'
+                } else {
+                   // document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
+                }
+            }, {scope: 'publish_actions'});
+        }
+        // getting basic user info
+        function getInfo() {
+            FB.api('/me', 'GET', {fields: 'first_name,last_name,name,id'}, function(response) {
+              //  document.getElementById('status').innerHTML = response.name;
+                if(response){
+                    fb_post();
+                }
+               // alert("Hello! I am in get info");
+            });
+        }
+        // posting on user timeline
+        function fb_post() {
+            if(document.getElementsByName('post_text_value').value!=""){
+                if(document.getElementsByName('post_text_hashtag').value!="") {
+                    var hashValue = document.getElementById('post_text_hashtag').value.split(',');
+                    var hashtags = '#'+hashValue.join('\n#');
+                }
+                else{
+                    var hashtags="";
+                }
+                var fb_message =document.getElementById('post_text_value').value+'\n'+hashtags;
+
+            }
+            FB.api('/me/feed', 'post', {message: fb_message}, function(response) {
+               // document.getElementById('status').innerHTML = response.id;
+               // alert("Hello! I am posting in fb..yahooo!!");
+            });
+        }
+        //Select post for fb (fb_login) function
+        $(function () {
+            $("#post_fb_text").click(function () {
+                fb_login();
+
+             //   alert("Hello! I am in post fb text!!");
+            });
+        });
+
+    </script>
+
 
 <div class="dashboard_body row">
     @foreach($user as $data)
-        {{$data['users_name']}}}
+
     <div class="col-xs-3 row" style="height:92vh;overflow-y: scroll; background:#fafafa; z-index:1000">
         <div class="col-xs-6" style=" padding-left:20px!important; padding-right:0px;">
             <div class="dash_thumbnail">
@@ -65,6 +143,11 @@
     </div>
     <div class="col-xs-9">
         <div class="dash_contents">
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#images"><b>Images</b></a></li>
                 <li><a data-toggle="tab" href="#vedios"><b>Vedios</b></a></li>
@@ -91,13 +174,13 @@
                             <li style="list-style:none; display:inline-block;"><img src="img/wordPress.png" class="chobigulo"> </li>
                         </usl>
                         <br><br>
-                        <button type="submit" class="btn btn-info pull-right" style="border-radius: 19px; font-size:17px; background:#00A5CF;">Publish</button>
+                        <button type="submit" class="btn btn-info pull-right" id="post_on" style="border-radius: 19px; font-size:17px; background:#00A5CF;">Publish</button>
                     </form>
 
 
                 </div>
                 <div id="vedios" class="tab-pane fade dash_tab_content">
-                    <form class="form-horizontal" role="form">
+                    <form class="form-horizontal" role="form" methode="post" action="">
 
                         <h2>Well,</h2> So, I was talking about posting a video and the link of that video is:
                         <input type="text" class="dash_input" id="imagelink" name="imagelink" placeholder="video link" style="">
@@ -118,22 +201,22 @@
                     </form>
                 </div>
                 <div id="texts" class="tab-pane fade dash_tab_content">
-                    <form class="form-horizontal" role="form">
-
+                    <form class="form-horizontal" role="form" method="post" action="postText" id="post_text">
+                        {{csrf_field()}}
                         <h2>Well,</h2> So, I was talking about posting a status. All you have to do is to post this
-                        <input type="text" class="dash_input" id="onlytext" name="onlytext" placeholder="any text" style="">
+                        <input type="text" class="dash_input" id="post_text_value" name="post_text_value" placeholder="any text" style="">
                         into my selected social sites with all these hashtags:
-                        <input type="text" class="dash_input" name="hashtags" id="hashtags" placeholder="hashtags, separated by commas">
+                        <input type="text" class="dash_input" name="post_text_hashtag" id="post_text_hashtag" placeholder="hashtags, separated by commas">
                         . By the way, you should post this article on:
                         <usl style="width:840px; margin-left:10px; margin-top:-10px">
-                            <li style="list-style:none; display:inline-block;"><img src="img/Facebook.png" class="chobigulo"> </li>
+                            <li style="list-style:none; display:inline-block;"><img  id ="post_fb_text" src="img/Facebook.png" class="chobigulo"> </li>
                             <li style="list-style:none; display:inline-block;"><img src="img/googleplus.png" class="chobigulo"> </li>
                             <li style="list-style:none; display:inline-block;"><img src="img/twitter.png" class="chobigulo"> </li>
                             <li style="list-style:none; display:inline-block;"><img src="img/instagram.png" class="chobigulo"> </li>
                             <li style="list-style:none; display:inline-block;"><img src="img/wordPress.png" class="chobigulo"> </li>
                         </usl>
                         <br><br>
-                        <button type="submit" class="btn btn-info pull-right" style="border-radius: 19px; font-size:17px; background:#00A5CF;">Publish</button>
+                        <button type="submit"  class="btn btn-info pull-right" style="border-radius: 19px; font-size:17px; background:#00A5CF;">Publish</button>
                     </form>
                 </div>
             </div>

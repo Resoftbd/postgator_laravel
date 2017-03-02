@@ -28,8 +28,9 @@
         <img src="img/jj.png" style="height:4vw; width:4vw; padding:0.5vw; border-radius:2vw;">
     </div>
     <div class="col-xs-6">
-        <img src="{{$data['users_fb_photo']}}" class="pull-right" style="height:4vw; width:4vw; padding:0.5vw; border-radius:2vw;">
+        <a href="logout">  <img src="{{$data['users_fb_photo']}}" class="pull-right" style="height:4vw; width:4vw; padding:0.5vw; border-radius:2vw;"></a>
     </div>
+
 </div>
 @endforeach
 @show

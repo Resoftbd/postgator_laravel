@@ -40,7 +40,8 @@
                     </ul>
                 </div>
             @endif
-			<form class="form-horizontal" role="form"  method="post" action="{{'login'}}">
+
+			<form class="form-horizontal" role="form"  method="post" action="{{route('login')}}">
                 {{csrf_field()}}
 				<div class="form-group">
 
