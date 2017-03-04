@@ -20,15 +20,15 @@ Route::get('/logout', function()
     Auth::logout();
     Session::forget('users_id');
     Session::flush();
-    return Redirect::to('/do_login');
+    return Redirect::to('/login');
 });
 
-Route::get('/menu', array('before' => 'auth.basic', function()
+Route::get('/user_menu', array('before' => 'auth.basic', function()
 {
     if (Auth::check()) {
         return Redirect::to('/user_menu');
     } else {
-        return Redirect::to('/do_login');
+        return Redirect::to('/login');
     }
 
 }));
@@ -38,7 +38,7 @@ Route::get('/social_auth', array('before' => 'auth.basic', function()
     if (Auth::check()) {
         return Redirect::to('/social_auth');
     } else {
-        return Redirect::to('/do_login');
+        return Redirect::to('/login');
     }
 
 }));
@@ -52,4 +52,5 @@ Route::get('/user_menu', 'HomeController@user_menu');
 Route::get('/do_login', 'HomeController@do_login');
 Route::post('/socialInfo', 'HomeController@social_info');
 Route::post('/postText', 'HomeController@post_text');
+Route::post('/photoUpload', 'HomeController@photo_upload');
 Route::get('/dashboard', 'HomeController@dashboard');

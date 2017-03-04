@@ -54,8 +54,8 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'users_name' => 'required|max:255',
-            'users_email' => 'required|email|max:255|unique:users',
-            'users_password' => 'required|min:6|confirmed',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
         ]);
     }
 
@@ -69,8 +69,8 @@ class RegisterController extends Controller
     {
         return User::create([
             'users_name' => $data['users_name'],
-            'users_email' => $data['users_email'],
-            'users_password' => bcrypt($data['users_password']),
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
         ]);
 
        //return view('users.social_login');

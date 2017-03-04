@@ -8,6 +8,10 @@ use App\User;
 use App\Post_text;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
+use Input;
+use Validator;
+use Redirect;
+use Session;
 
 class HomeController extends Controller
 {
@@ -58,6 +62,8 @@ class HomeController extends Controller
 
     public function user_menu()
     {
+        $id = Auth::id();
+        session(['users_id' => $id]);
         return view('users.menu');
     }
     public function social_info(Request $request)
@@ -93,6 +99,25 @@ class HomeController extends Controller
        // $books = DB::collection('books')->get();
         return redirect('dashboard')->with('status', 'Text has been posted!');
        // return redirect()->action('HomeController@dashboard');
+    }
+    //photo upload
+    public function photo_upload(Request $request) {
+        // getting all of the post data
+        $file = $request->input('post_photo_link');
+        // setting up rules
+        $rules = array('image' => 'required',); //mimes:jpeg,bmp,png and for max size max:10000
+
+            // checking file is valid.
+
+                $destinationPath = 'uploads/image'; // upload path
+                $extension = explode('.',$file ); // getting image extension
+                $fileName = rand(11111,99999).'.'.$extension; // renameing image
+                $request->input('post_photo_link')->move($destinationPath, $fileName); // uploading file to given path
+                // sending back with message
+                Session::flash('success', 'Upload successfully');
+                return Redirect::to('dashboard');
+
+
     }
 
 }

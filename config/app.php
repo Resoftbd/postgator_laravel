@@ -166,7 +166,7 @@ return [
         Jenssegers\Mongodb\MongodbServiceProvider::class,
         //Jenssegers\Mongodb\Session\SessionServiceProvider::class,
         Jenssegers\Mongodb\Auth\PasswordResetServiceProvider::class,
-
+        Collective\Html\HtmlServiceProvider::class,
 
 
 
@@ -233,7 +233,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Moloquent' => 'Jenssegers\Mongodb\Eloquent\Model',
-
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
 
 
     ],

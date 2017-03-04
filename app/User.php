@@ -3,10 +3,16 @@
 namespace App;
 use Jenssegers\Mongodb\Auth\PasswordResetServiceProvider;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-
-class User extends Authenticatable
+use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+ use Illuminate\Auth\Authenticatable;
+ use Illuminate\Auth\Passwords\CanResetPassword;
+ use Illuminate\Foundation\Auth\Access\Authorizable;
+ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+class User extends Eloquent implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
+    use Authenticatable, Authorizable, CanResetPassword;
     use Notifiable;
 
     /**
@@ -19,12 +25,12 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function getAuthPassword()
-    {
-        return $this->users_password;
-    }
+//    public function getAuthPassword()
+//    {
+//        return $this->users_password;
+//    }
     protected $fillable = [
-        'users_name', 'users_email', 'users_password',
+        'users_name', 'email', 'password',
     ];
 
     /**
@@ -34,6 +40,6 @@ class User extends Authenticatable
      */
 
     protected $hidden = [
-        'users_password', 'remember_token',
+        'password', 'remember_token',
     ];
 }

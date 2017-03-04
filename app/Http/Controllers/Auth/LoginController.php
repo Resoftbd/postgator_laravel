@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -33,14 +32,14 @@ class LoginController extends Controller
      * @return void
      */
     // Override to use 'users_email'
-    public function users_email()
-    {
-        return 'users_email';
-    }
-    public function users_password()
-    {
-        return 'users_password';
-    }
+//    public function users_email()
+//    {
+//        return 'users_email';
+//    }
+//    public function users_password()
+//    {
+//        return 'users_password';
+//    }
 
 
     public function __construct()

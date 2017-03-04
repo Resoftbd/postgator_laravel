@@ -91,14 +91,14 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="email"><i class="fa fa-envelope icons"></i></label>
 					<div class="col-sm-10">
-						<input type="email" class="form-control" name="users_email" id="email_reg" value="{{ old('users_email') }}" placeholder="Enter email">
+						<input type="email" class="form-control" name="email" id="email_reg" value="{{ old('users_email') }}" placeholder="Enter email">
 					</div>
 				</div>
 				<div class="form-group">
 
 					<label class="control-label col-sm-2" for="pwd"><i class="fa fa-lock icons"></i></label>
 					<div class="col-sm-10">
-						<input type="password" class="form-control"  name="users_password" id="pwd_reg" placeholder="Enter password">
+						<input type="password" class="form-control"  name="password" id="pwd_reg" placeholder="Enter password">
 
 					</div>
 				</div>
@@ -106,7 +106,7 @@
 
 					<label class="control-label col-sm-2" for="pwd"><i class="fa fa-lock icons"></i></label>
 					<div class="col-sm-10">
-						<input type="password" class="form-control"  name="users_password_confirmation" id="pwd_reg" placeholder="Retype password">
+						<input type="password" class="form-control"  name="password_confirmation" id="pwd_reg" placeholder="Retype password">
 
 					</div>
 				</div>

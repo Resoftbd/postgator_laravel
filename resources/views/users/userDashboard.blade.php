@@ -66,20 +66,38 @@
                 else{
                     var hashtags="";
                 }
-                var fb_message =document.getElementById('post_text_value').value+'\n'+hashtags;
+                var photo = document.getElementById('post_photo_link');
+                var wallPost = {
+                    message : document.getElementById('post_text_value').value+'\n'+hashtags,
+                   // source: "http://resoftbd.com/assets/upload/team/134990048589f498c6d09c.JPG"
+                };
+
+
 
             }
-            FB.api('/me/feed', 'post', {message: fb_message}, function(response) {
-               // document.getElementById('status').innerHTML = response.id;
-               // alert("Hello! I am posting in fb..yahooo!!");
+            FB.api('/me/feed', 'post', wallPost, function(response) {
+                if (!response || response.error) {
+                    alert('Error occured');
+                } else {
+                    alert('Post ID: ' + response);
+                }
             });
         }
+
         //Select post for fb (fb_login) function
+
         $(function () {
             $("#post_fb_text").click(function () {
                 fb_login();
 
              //   alert("Hello! I am in post fb text!!");
+            });
+        });
+        $(function () {
+            $("#post_fb_photo").click(function () {
+                fb_post();
+
+                //   alert("Hello! I am in post fb text!!");
             });
         });
 
@@ -157,17 +175,17 @@
 
             <div class="tab-content">
                 <div id="images" class="tab-pane fade in active dash_tab_content">
-                    <form class="form-horizontal text-justify" role="form">
-
+                    <form class="form-horizontal text-justify" role="form" method="post" enctype="multipart/form-data" action="photoUpload">
+                        {{csrf_field()}}
                         <h2>Well,</h2> So, I was talking about posting an image and the link of that image is:
-                        <input type="text" class="dash_input" id="imagelink" name="imagelink" placeholder="image link" style="">
+                        <input type="file" class="" id="post_photo_link" name="post_photo_link" placeholder="image link" style="">
                         and plz add
-                        <input type="text" class="dash_input" id="imagetext" name="imagetext" placeholder="any caption for image" style="">
+                        <input type="text" class="dash_input" id="post_photo_caption" name="post_photo_caption" placeholder="any caption for image" style="">
                         this caption with that image. O, totally forgot about one more thing, hashtags. Plz add these hashtags
-                        <input type="text" class="dash_input" name="hashtags" id="hashtags" placeholder="hashtags, separated by commas">
+                        <input type="text" class="dash_input" name="post_photo_hashtag" id="post_photo_hashtag" placeholder="hashtags, separated by commas">
                         . By the way, you should post these images on:
                         <usl style="width:840px; margin-left:10px; margin-top:-10px">
-                            <li style="list-style:none; display:inline-block;"><img src="img/Facebook.png" class="chobigulo"> </li>
+                            <li style="list-style:none; display:inline-block;"><img  id ="post_fb_photo" src="img/Facebook.png" class="chobigulo"> </li>
                             <li style="list-style:none; display:inline-block;"><img src="img/googleplus.png" class="chobigulo"> </li>
                             <li style="list-style:none; display:inline-block;"><img src="img/twitter.png" class="chobigulo"> </li>
                             <li style="list-style:none; display:inline-block;"><img src="img/instagram.png" class="chobigulo"> </li>
@@ -216,7 +234,7 @@
                             <li style="list-style:none; display:inline-block;"><img src="img/wordPress.png" class="chobigulo"> </li>
                         </usl>
                         <br><br>
-                        <button type="submit"  class="btn btn-info pull-right" style="border-radius: 19px; font-size:17px; background:#00A5CF;">Publish</button>
+                        <button type="submit" id="post_on" class="btn btn-info pull-right" style="border-radius: 19px; font-size:17px; background:#00A5CF;">Publish</button>
                     </form>
                 </div>
             </div>
