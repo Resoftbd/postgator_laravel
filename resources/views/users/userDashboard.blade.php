@@ -44,7 +44,7 @@
                 } else {
                    // document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
                 }
-            }, {scope: 'publish_actions'});
+            }, {scope: 'publish_actions,publish_stream,user_photos,'});
         }
         // getting basic user info
         function getInfo() {
@@ -98,12 +98,33 @@
             };
 
         }
-            FB.api('/me/feed', 'post', wallPost, function(response) {
+//            FB.api('/me/feed', 'post', wallPost, function(response) {
+//                if (!response || response.error) {
+//                    alert('Error occured');
+//                } else {
+//                    alert('Post ID: ' + response);
+//                }
+//            });
+
+        }
+// from pc
+        function fileUpload() {
+            FB.api('/me/albums', function(response) {
+                var album = response.data[0]; // Now, upload the image to first found album for easiness.
+                var action_url = 'https://graph.facebook.com/' + album.id + '/photos?access_token=' +  accessToken;
+                var form = document.getElementById('upload-photo-form');
+                form.setAttribute('action', action_url);
+
+                // This does not work because of security reasons. Choose the local file manually.
+                // var file = document.getElementById('upload-photo-form-file');
+                // file.setAttribute('value', "/Users/nseo/Desktop/test_title_03.gif")
+
+                form.submit();
                 if (!response || response.error) {
-                    alert('Error occured');
-                } else {
-                    alert('Post ID: ' + response);
-                }
+                  alert('Error occured');
+               } else {
+                   alert('Post ID: ' + response);
+               }
             });
         }
 
@@ -118,7 +139,7 @@
         });
         $(function () {
             $("#post_fb_photo").click(function () {
-                fb_photo_post();
+                fileUpload();
 
                 //   alert("Hello! I am in post fb text!!");
             });
@@ -185,10 +206,25 @@
     <div class="col-xs-9">
         <div class="dash_contents">
             @if (session('status'))
-                <div class="alert alert-success">
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert"
+                            aria-hidden="true">
+                        &times;
+                    </button>
                     {{ session('status') }}
                 </div>
+
             @endif
+                @if (session('failed'))
+                    <div class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">
+                            &times;
+                        </button>
+                        {{ session('failed') }}
+                    </div>
+
+                @endif
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#images"><b>Images</b></a></li>
                 <li><a data-toggle="tab" href="#vedios"><b>Vedios</b></a></li>
@@ -198,15 +234,15 @@
 
             <div class="tab-content">
                 <div id="images" class="tab-pane fade in active dash_tab_content">
-                    {!! Form::open(array('url'=>'photoUpload','method'=>'POST', 'files'=>true,'class'=>'form-horizontal text-justify')) !!}
-                        {{csrf_field()}}
+                    <form class="form-horizontal text-justify" id="upload-photo-form" role="form" method="post" action="photoUpload" enctype="multipart/form-data">
+                        {!! csrf_field() !!}
                         <h2>Well,</h2> So, I was talking about posting an image and the link of that image is:
-                    {!! Form::text('post_photo_link',null, array('class'=>'dash_input','placeholder'=>'Image link','id'=>'post_photo_link')) !!}
-                    and plz add
-                    {!! Form::text('post_photo_caption',null, array('class'=>'dash_input','placeholder'=>'any caption for image','id'=>'post_photo_caption')) !!}
-                           this caption with that image. O, totally forgot about one more thing, hashtags. Plz add these hashtags
-                    {!! Form::text('post_photo_hashtag',null, array('class'=>'dash_input','placeholder'=>'hashtags, separated by commas','id'=>'post_photo_hashtag')) !!}
-                             . By the way, you should post these images on:
+                        <input type="file" class="" id="post_photo_link" name="post_photo_link" placeholder="image link" style="">
+                        and plz add
+                        <input type="text" class="dash_input" id="post_photo_caption" name="post_photo_caption" placeholder="any caption for image" style="">
+                        this caption with that image. O, totally forgot about one more thing, hashtags. Plz add these hashtags
+                        <input type="text" class="dash_input" name="post_photo_hashtag" id="post_photo_hashtag" placeholder="hashtags, separated by commas">
+                        . By the way, you should post these images on:
                         <usl style="width:840px; margin-left:10px; margin-top:-10px">
                             <li style="list-style:none; display:inline-block;"><img  id ="post_fb_photo" src="img/Facebook.png" class="chobigulo"> </li>
                             <li style="list-style:none; display:inline-block;"><img src="img/googleplus.png" class="chobigulo"> </li>
@@ -215,9 +251,8 @@
                             <li style="list-style:none; display:inline-block;"><img src="img/wordPress.png" class="chobigulo"> </li>
                         </usl>
                         <br><br>
-                    {!! Form::submit('Publish', array('class'=>'btn send-btn btn-info pull-right')) !!}
-                       {!! Form::close() !!}
-
+                        <button type="submit" class="btn btn-info pull-right" style="border-radius: 19px; font-size:17px; background:#00A5CF;">Publish</button>
+                    </form>
 
 
                 </div>
@@ -232,7 +267,7 @@
                         <input type="text" class="dash_input" name="hashtags" id="hashtags" placeholder="hashtags, separated by commas">
                         . By the way, you should post these vedios on:
                         <usl style="width:840px; margin-left:10px; margin-top:-10px">
-                            <li style="list-style:none; display:inline-block;"><img src="img/Facebook.png" class="chobigulo"> </li>
+                            <li style="list-style:none; display:inline-block;"><img  id ="post_fb_photo" src="img/Facebook.png" class="chobigulo"> </li>
                             <li style="list-style:none; display:inline-block;"><img src="img/googleplus.png" class="chobigulo"> </li>
                             <li style="list-style:none; display:inline-block;"><img src="img/twitter.png" class="chobigulo"> </li>
                             <li style="list-style:none; display:inline-block;"><img src="img/instagram.png" class="chobigulo"> </li>
