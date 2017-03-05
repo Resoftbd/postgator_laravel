@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
-use App\Post_text;
+use App\post_text;
+use App\post_photo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Input;
@@ -101,23 +102,34 @@ class HomeController extends Controller
        // return redirect()->action('HomeController@dashboard');
     }
     //photo upload
-    public function photo_upload(Request $request) {
-        // getting all of the post data
-        $file = $request->input('post_photo_link');
-        // setting up rules
-        $rules = array('image' => 'required',); //mimes:jpeg,bmp,png and for max size max:10000
 
-            // checking file is valid.
+    public function photo_upload(Request $request)
+    {
+        $file = $request->file('post_photo_link');
+        $allowedFileTypes = config('app.allowedFileTypes');
+        $maxFileSize = config('app.maxFileSize');
+        $rules = [
+            'file' => 'required|mimes:' . $allowedFileTypes . '|max:' . $maxFileSize
+        ];
+        $this->validate($request, $rules);
+        $fileName = $file->getClientOriginalName();
+        $destinationPath = config('app.fileDestinationPath') . '/' . $fileName;
+        $uploaded = Storage::put($destinationPath, file_get_contents($file->getRealPath()));
 
-                $destinationPath = 'uploads/image'; // upload path
-                $extension = explode('.',$file ); // getting image extension
-                $fileName = rand(11111,99999).'.'.$extension; // renameing image
-                $request->input('post_photo_link')->move($destinationPath, $fileName); // uploading file to given path
-                // sending back with message
-                Session::flash('success', 'Upload successfully');
-                return Redirect::to('dashboard');
+        if ($uploaded) {
+            UploadedFile::create([
+                'filename' => $fileName
+            ]);
+        }
+        // }
 
-
+        return redirect()->to('/do_upload');
+    }
+    public function do_upload(){
+        $directory = config('app.fileDestinationPath');
+        // $files = Storage::files($directory);
+        $files = UploadedFile::all();
+        return view('files.dashboard')->with(array('files' => $files));
     }
 
 }
