@@ -49,7 +49,7 @@
                 } else {
                    // document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
                 }
-            }, {scope: 'publish_actions,publish_stream,user_photos,photo_upload,share_item'});
+            }, {scope: 'publish_actions,publish_stream,user_photos,photo_upload,share_item,user_videos'});
         }
         // getting basic user info
         function getInfo() {
@@ -90,14 +90,18 @@
 
         function fileUpload() {
 
-            var wallPost = {
-                description : 'asdsasad'
-            };
-            FB.api('/me/albums',wallPost, function(response) {
+            var params = {};
+            params['message'] = 'Message';
+            params['name'] = 'Name';
+            params['description'] = 'Description';
+            params['link'] = 'http://apps.facebook.com/summer-mourning/';
+            params['picture'] = 'http://summer-mourning.zoocha.com/uploads/thumb.png';
+            params['caption'] = 'Caption';
+            FB.api('/me/albums' ,params,function(response) {
 
                 var album = response.data[0];
                // Now, upload the image to first found album for easiness.
-                var action_url = 'https://graph.facebook.com/' + album.id + '/photos?access_token=' +  accessToken;
+                var action_url = 'https://graph.facebook.com/' + album.id + '/albums?access_token=' +  accessToken;
                 var form = document.getElementById('upload-photo-form');
                 form.setAttribute('action', action_url);
 
@@ -113,7 +117,18 @@
                }
             });
         }
+        //fb video up
+        function videoUpload(){
+            var fb = new FacebookClient("access_token");
 
+             parameters = new ExpandoObject();
+            parameters.source = new FacebookMediaObject { ContentType = "video/3gpp", FileName = "video.3gp" }.SetValue(File.ReadAllBytes(@"c:\video.3gp"));
+            parameters.title = "video title";
+            parameters.description = "video description";
+
+             result = fb.Post("/me/videos", parameters);
+            Console.WriteLine(result);
+        }
         //Select post for fb (fb_login) function
 
         $(function () {
@@ -126,6 +141,7 @@
         $(function () {
             $("#post_fb_photo").click(function () {
                 fileUpload();
+                document.getElementById('post_fb_photo').src="img/fb2.png";
 
                 //   alert("Hello! I am in post fb text!!");
             });
@@ -245,10 +261,10 @@
 
                 </div>
                 <div id="vedios" class="tab-pane fade dash_tab_content">
-                    <form class="form-horizontal" role="form" methode="post" action="">
+                    <form class="form-horizontal" role="form" methode="post" action="" enctype="multipart/form-data">
 
                         <h2>Well,</h2> So, I was talking about posting a video and the link of that video is:
-                        <input type="text" class="dash_input" id="imagelink" name="imagelink" placeholder="video link" style="">
+                        <input type="file" class="" id="post_video_link" name="post_photo_link" placeholder="image link" style="">
                         and plz add
                         <input type="text" class="dash_input" id="imagetext" name="imagetext" placeholder="any caption for video" style="">
                         this caption with that video. O, totally forgot about one more thing, hashtags. Plz add these hashtags
