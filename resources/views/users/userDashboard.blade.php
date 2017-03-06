@@ -12,11 +12,15 @@
         window.fbAsyncInit = function() {
             FB.init({
                 appId      : '1893798254237418',
+                status     : true,
+                cookie     : true,
+                oauth      : true,
                 xfbml      : true,
                 version    : 'v2.8'
             });
             FB.getLoginStatus(function(response) {
                 if (response.status === 'connected') {
+                    accessToken = response.authResponse.accessToken;
                   //  document.getElementById('status').innerHTML = 'We are connected.';
                    // document.getElementById('login').style.visibility = 'hidden';
                 } else if (response.status === 'not_authorized') {
@@ -36,6 +40,7 @@
         function fb_login() {
             FB.login(function(response) {
                 if (response.status === 'connected') {
+                    accessToken = response.authResponse.accessToken;
                     // document.getElementById('status').innerHTML = 'We are connected.';
                     document.getElementById('post_fb_text').src="img/fb2.png";
                     getInfo();
@@ -44,7 +49,7 @@
                 } else {
                    // document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
                 }
-            }, {scope: 'publish_actions,publish_stream,user_photos,'});
+            }, {scope: 'publish_actions,publish_stream,user_photos,photo_upload,share_item'});
         }
         // getting basic user info
         function getInfo() {
@@ -81,36 +86,17 @@
                 }
             });
         }
-        //fb photo post
-        function fb_photo_post(){
-            if(document.getElementsByName('post_photo_caption').value!=""){
-            if(document.getElementsByName('post_photo_hashtag').value!="") {
-                var hashValue = document.getElementById('post_photo_hashtag').value.split(',');
-                var hashtags = '#'+hashValue.join('\n#');
-            }
-            else{
-                var hashtags="";
-            }
-            var photo = document.getElementById('post_photo_link').value;
-            var wallPost = {
-                message :document.getElementById('post_photo_caption').value+'\n'+hashtags,
-                source: photo
-            };
+        //fb photo post  from pc
 
-        }
-//            FB.api('/me/feed', 'post', wallPost, function(response) {
-//                if (!response || response.error) {
-//                    alert('Error occured');
-//                } else {
-//                    alert('Post ID: ' + response);
-//                }
-//            });
-
-        }
-// from pc
         function fileUpload() {
-            FB.api('/me/albums', function(response) {
-                var album = response.data[0]; // Now, upload the image to first found album for easiness.
+
+            var wallPost = {
+                description : 'asdsasad'
+            };
+            FB.api('/me/albums',wallPost, function(response) {
+
+                var album = response.data[0];
+               // Now, upload the image to first found album for easiness.
                 var action_url = 'https://graph.facebook.com/' + album.id + '/photos?access_token=' +  accessToken;
                 var form = document.getElementById('upload-photo-form');
                 form.setAttribute('action', action_url);
@@ -234,8 +220,8 @@
 
             <div class="tab-content">
                 <div id="images" class="tab-pane fade in active dash_tab_content">
-                    <form class="form-horizontal text-justify" id="upload-photo-form" role="form" method="post" action="photoUpload" enctype="multipart/form-data">
-                        {!! csrf_field() !!}
+                    <form class="form-horizontal text-justify" target="upload_iframe" id="upload-photo-form" role="form" method="post" action="photoUpload" enctype="multipart/form-data">
+                           {!! csrf_field() !!}
                         <h2>Well,</h2> So, I was talking about posting an image and the link of that image is:
                         <input type="file" class="" id="post_photo_link" name="post_photo_link" placeholder="image link" style="">
                         and plz add
@@ -252,6 +238,8 @@
                         </usl>
                         <br><br>
                         <button type="submit" class="btn btn-info pull-right" style="border-radius: 19px; font-size:17px; background:#00A5CF;">Publish</button>
+                        <iframe id="upload_iframe" name="upload_iframe" witdh="0px" height="0px" border="0" style="width:0; height:0; border:none;"></iframe>
+
                     </form>
 
 
