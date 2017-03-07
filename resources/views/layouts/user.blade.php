@@ -12,7 +12,7 @@
     <script type="text/javascript" src="{{asset('css/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('css/bootstrap.js')}}"></script>
     <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
-    <link href="{{asset('assets/font-awesome/css/font-awesome.min.css')}}'" rel="stylesheet" type="text/css">
+    <link href="{{asset('font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
 
 
 

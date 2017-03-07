@@ -96,40 +96,45 @@ class HomeController extends Controller
         $post->post_text_value =  $request->input('post_text_value');
         $post->post_text_hashtag =  $request->input('post_text_hashtag');
         $post->post_text_users_id_fkey = session('users_id');
-        $post->save();
-       // $books = DB::collection('books')->get();
-        return redirect('dashboard')->with('status', 'Text has been posted!');
-       // return redirect()->action('HomeController@dashboard');
+        $status =$post->save();
+
+        if($status)
+            return redirect('dashboard')->with('status', 'Text has been posted!');
+        else
+            return redirect('dashboard')->with('failed', 'Text was not posted!!!');
     }
     //photo upload
 
     public function photo_upload(Request $request)
     {
-        $file = $request->file('post_photo_link');
-        $allowedFileTypes = config('app.allowedFileTypes');
-        $maxFileSize = config('app.maxFileSize');
-        $rules = [
-            'file' => 'required|mimes:' . $allowedFileTypes . '|max:' . $maxFileSize
-        ];
-        $this->validate($request, $rules);
-        $fileName = $file->getClientOriginalName();
-        $destinationPath = config('app.fileDestinationPath') . '/' . $fileName;
-        $uploaded = Storage::put($destinationPath, file_get_contents($file->getRealPath()));
+        $name = $_FILES['post_photo_link']['name'];
+        $post_photo = new post_photo();
+        $post_photo->post_photo_caption = $_POST['post_photo_caption'];
+        $post_photo->post_photo_hashtag = $_POST['post_photo_hashtag'];
+        $post_photo->post_photo_users_id_fkey = session('users_id');
+        $name_ext = explode('.',$name );
+        $ext = end($name_ext);
+        $target_name = uniqid(rand()).".".$ext;
+        $target_file1 = "UploadFolder/Images/".$target_name;
+        $post_photo->post_photo_link = $target_file1;
+        $status = $post_photo->save();
 
-        if ($uploaded) {
-            UploadedFile::create([
-                'filename' => $fileName
-            ]);
-        }
-        // }
 
-        return redirect()->to('/do_upload');
+        $fileName=  $post_photo->post_photo_link;
+
+        $source= $_FILES['post_photo_link']['tmp_name'];
+        @mkdir("UploadFolder/Images");
+        $destination=$fileName;
+        move_uploaded_file($source,$destination);
+
+
+
+        if($status)
+        return redirect('dashboard')->with('status', 'Photo has been posted!');
+        else
+            return redirect('dashboard')->with('failed', 'Photo was not posted!!!');
+
     }
-    public function do_upload(){
-        $directory = config('app.fileDestinationPath');
-        // $files = Storage::files($directory);
-        $files = UploadedFile::all();
-        return view('files.dashboard')->with(array('files' => $files));
-    }
+
 
 }

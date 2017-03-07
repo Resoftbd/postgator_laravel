@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class post_photo extends Model
+class post_photo extends Eloquent
 {
     //post_photo fields
     protected $fillable = [

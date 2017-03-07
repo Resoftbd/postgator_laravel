@@ -12,11 +12,15 @@
         window.fbAsyncInit = function() {
             FB.init({
                 appId      : '1893798254237418',
+                status     : true,
+                cookie     : true,
+                oauth      : true,
                 xfbml      : true,
                 version    : 'v2.8'
             });
             FB.getLoginStatus(function(response) {
                 if (response.status === 'connected') {
+                    accessToken = response.authResponse.accessToken;
                   //  document.getElementById('status').innerHTML = 'We are connected.';
                    // document.getElementById('login').style.visibility = 'hidden';
                 } else if (response.status === 'not_authorized') {
@@ -36,6 +40,7 @@
         function fb_login() {
             FB.login(function(response) {
                 if (response.status === 'connected') {
+                    accessToken = response.authResponse.accessToken;
                     // document.getElementById('status').innerHTML = 'We are connected.';
                     document.getElementById('post_fb_text').src="img/fb2.png";
                     getInfo();
@@ -44,7 +49,7 @@
                 } else {
                    // document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
                 }
-            }, {scope: 'publish_actions'});
+            }, {scope: 'publish_actions,publish_stream,user_photos,photo_upload,share_item,user_videos'});
         }
         // getting basic user info
         function getInfo() {
@@ -81,32 +86,49 @@
                 }
             });
         }
-        //fb photo post
-        function fb_photo_post(){
-            if(document.getElementsByName('post_photo_caption').value!=""){
-            if(document.getElementsByName('post_photo_hashtag').value!="") {
-                var hashValue = document.getElementById('post_photo_hashtag').value.split(',');
-                var hashtags = '#'+hashValue.join('\n#');
-            }
-            else{
-                var hashtags="";
-            }
-            var photo = document.getElementById('post_photo_link').value;
-            var wallPost = {
-                message :document.getElementById('post_photo_caption').value+'\n'+hashtags,
-                source: photo
-            };
+        //fb photo post  from pc
 
-        }
-            FB.api('/me/feed', 'post', wallPost, function(response) {
+        function fileUpload() {
+
+            var params = {};
+            params['message'] = 'Message';
+            params['name'] = 'Name';
+            params['description'] = 'Description';
+            params['link'] = 'http://apps.facebook.com/summer-mourning/';
+            params['picture'] = 'http://summer-mourning.zoocha.com/uploads/thumb.png';
+            params['caption'] = 'Caption';
+            FB.api('/me/albums' ,params,function(response) {
+
+                var album = response.data[0];
+               // Now, upload the image to first found album for easiness.
+                var action_url = 'https://graph.facebook.com/' + album.id + '/albums?access_token=' +  accessToken;
+                var form = document.getElementById('upload-photo-form');
+                form.setAttribute('action', action_url);
+
+                // This does not work because of security reasons. Choose the local file manually.
+                // var file = document.getElementById('upload-photo-form-file');
+                // file.setAttribute('value', "/Users/nseo/Desktop/test_title_03.gif")
+
+                form.submit();
                 if (!response || response.error) {
-                    alert('Error occured');
-                } else {
-                    alert('Post ID: ' + response);
-                }
+                  alert('Error occured');
+               } else {
+                   alert('Post ID: ' + response);
+               }
             });
         }
+        //fb video up
+        function videoUpload(){
+            var fb = new FacebookClient("access_token");
 
+             parameters = new ExpandoObject();
+            parameters.source = new FacebookMediaObject { ContentType = "video/3gpp", FileName = "video.3gp" }.SetValue(File.ReadAllBytes(@"c:\video.3gp"));
+            parameters.title = "video title";
+            parameters.description = "video description";
+
+             result = fb.Post("/me/videos", parameters);
+            Console.WriteLine(result);
+        }
         //Select post for fb (fb_login) function
 
         $(function () {
@@ -118,7 +140,8 @@
         });
         $(function () {
             $("#post_fb_photo").click(function () {
-                fb_photo_post();
+                fileUpload();
+                document.getElementById('post_fb_photo').src="img/fb2.png";
 
                 //   alert("Hello! I am in post fb text!!");
             });
@@ -185,10 +208,25 @@
     <div class="col-xs-9">
         <div class="dash_contents">
             @if (session('status'))
-                <div class="alert alert-success">
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert"
+                            aria-hidden="true">
+                        &times;
+                    </button>
                     {{ session('status') }}
                 </div>
+
             @endif
+                @if (session('failed'))
+                    <div class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">
+                            &times;
+                        </button>
+                        {{ session('failed') }}
+                    </div>
+
+                @endif
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#images"><b>Images</b></a></li>
                 <li><a data-toggle="tab" href="#vedios"><b>Vedios</b></a></li>
@@ -198,15 +236,15 @@
 
             <div class="tab-content">
                 <div id="images" class="tab-pane fade in active dash_tab_content">
-                    {!! Form::open(array('url'=>'photoUpload','method'=>'POST', 'files'=>true,'class'=>'form-horizontal text-justify')) !!}
-                        {{csrf_field()}}
+                    <form class="form-horizontal text-justify" target="upload_iframe" id="upload-photo-form" role="form" method="post" action="photoUpload" enctype="multipart/form-data">
+                           {!! csrf_field() !!}
                         <h2>Well,</h2> So, I was talking about posting an image and the link of that image is:
-                    {!! Form::text('post_photo_link',null, array('class'=>'dash_input','placeholder'=>'Image link','id'=>'post_photo_link')) !!}
-                    and plz add
-                    {!! Form::text('post_photo_caption',null, array('class'=>'dash_input','placeholder'=>'any caption for image','id'=>'post_photo_caption')) !!}
-                           this caption with that image. O, totally forgot about one more thing, hashtags. Plz add these hashtags
-                    {!! Form::text('post_photo_hashtag',null, array('class'=>'dash_input','placeholder'=>'hashtags, separated by commas','id'=>'post_photo_hashtag')) !!}
-                             . By the way, you should post these images on:
+                        <input type="file" class="" id="post_photo_link" name="post_photo_link" placeholder="image link" style="">
+                        and plz add
+                        <input type="text" class="dash_input" id="post_photo_caption" name="post_photo_caption" placeholder="any caption for image" style="">
+                        this caption with that image. O, totally forgot about one more thing, hashtags. Plz add these hashtags
+                        <input type="text" class="dash_input" name="post_photo_hashtag" id="post_photo_hashtag" placeholder="hashtags, separated by commas">
+                        . By the way, you should post these images on:
                         <usl style="width:840px; margin-left:10px; margin-top:-10px">
                             <li style="list-style:none; display:inline-block;"><img  id ="post_fb_photo" src="img/Facebook.png" class="chobigulo"> </li>
                             <li style="list-style:none; display:inline-block;"><img src="img/googleplus.png" class="chobigulo"> </li>
@@ -215,24 +253,25 @@
                             <li style="list-style:none; display:inline-block;"><img src="img/wordPress.png" class="chobigulo"> </li>
                         </usl>
                         <br><br>
-                    {!! Form::submit('Publish', array('class'=>'btn send-btn btn-info pull-right')) !!}
-                       {!! Form::close() !!}
+                        <button type="submit" class="btn btn-info pull-right" style="border-radius: 19px; font-size:17px; background:#00A5CF;">Publish</button>
+                        <iframe id="upload_iframe" name="upload_iframe" witdh="0px" height="0px" border="0" style="width:0; height:0; border:none;"></iframe>
 
+                    </form>
 
 
                 </div>
                 <div id="vedios" class="tab-pane fade dash_tab_content">
-                    <form class="form-horizontal" role="form" methode="post" action="">
+                    <form class="form-horizontal" role="form" methode="post" action="" enctype="multipart/form-data">
 
                         <h2>Well,</h2> So, I was talking about posting a video and the link of that video is:
-                        <input type="text" class="dash_input" id="imagelink" name="imagelink" placeholder="video link" style="">
+                        <input type="file" class="" id="post_video_link" name="post_photo_link" placeholder="image link" style="">
                         and plz add
                         <input type="text" class="dash_input" id="imagetext" name="imagetext" placeholder="any caption for video" style="">
                         this caption with that video. O, totally forgot about one more thing, hashtags. Plz add these hashtags
                         <input type="text" class="dash_input" name="hashtags" id="hashtags" placeholder="hashtags, separated by commas">
                         . By the way, you should post these vedios on:
                         <usl style="width:840px; margin-left:10px; margin-top:-10px">
-                            <li style="list-style:none; display:inline-block;"><img src="img/Facebook.png" class="chobigulo"> </li>
+                            <li style="list-style:none; display:inline-block;"><img  id ="post_fb_photo" src="img/Facebook.png" class="chobigulo"> </li>
                             <li style="list-style:none; display:inline-block;"><img src="img/googleplus.png" class="chobigulo"> </li>
                             <li style="list-style:none; display:inline-block;"><img src="img/twitter.png" class="chobigulo"> </li>
                             <li style="list-style:none; display:inline-block;"><img src="img/instagram.png" class="chobigulo"> </li>
