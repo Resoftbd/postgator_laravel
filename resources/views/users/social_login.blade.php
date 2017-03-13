@@ -15,6 +15,48 @@
     <link href="{{asset('font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
 
 
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.5b1.js"></script>
+    <script type="text/javascript" src="//platform.linkedin.com/in.js">
+        api_key: 81z2njy7sm7tbm
+        authorize: true
+        onLoad: onLinkedInLoad
+    </script>
+
+    <script type="text/javascript">
+
+        // Setup an event listener to make an API call once auth is complete
+        function onLinkedInLoad() {
+            IN.Event.on(IN, "auth", getProfileData);
+
+            $('a[id*=li_ui_li_gen_]').html('<img src="img/linkedin.png"class="chobi" style="margin-top:12px;">');
+
+        }
+
+        // Handle the successful return from the API call
+        function onSuccess(data) {
+            console.log(data);
+        }
+
+        // Handle an error response from the API call
+        function onError(error) {
+            console.log(error);
+        }
+
+        // Use the API call wrapper to request the member's basic profile data
+        function getProfileData() {
+            IN.API.Raw("/people/~").result(onSuccess).error(onError);
+        }
+
+        $(function () {
+            $("#linkedin_login").click(function () {
+                onLinkedInLoad();
+            });
+        });
+
+    </script>
+
+
 </head>
 
 
@@ -172,11 +214,17 @@
     <input type="hidden" id ="fb_name" name="users_fb_name" value="">
     <input type="hidden" id ="fb_photo" name="users_fb_photo" value="">
     <input type="hidden" id ="google_id" name="users_google_id" value="">
+    <input type="hidden" id ="linked_id" name="users_linkedin_id" value="">
     <li style="list-style:none; display:inline-block;"><img src="img/Facebook.png"  id="login" class="chobi"> </li>
     <li style="list-style:none; display:inline-block;"><img src="img/googleplus.png" id ="google_login" class="chobi"> </li>
     <li style="list-style:none; display:inline-block;"><img src="img/twitter.png" class="chobi"> </li>
+<!--    <li style="list-style:none; display:inline-block;"><img src="img/linkedin.png"  id ="linkedin_login" class="chobi"> </li>-->
     <li style="list-style:none; display:inline-block;"><img src="img/instagram.png" class="chobi"> </li>
-    <li style="list-style:none; display:inline-block;"><img src="img/wordPress.png" class="chobi"> </li>
+
+     <script type="in/Login">
+Hello,<?js= firstName ?><?js= lastName ?>
+
+      </script>
 
     </ul>
     <br><br><br><br>

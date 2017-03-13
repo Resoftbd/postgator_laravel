@@ -7,147 +7,118 @@
 @endsection
 
 @section('content')
-    <script>
-        // initialize and setup facebook js sdk
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId      : '1893798254237418',
-                status     : true,
-                cookie     : true,
-                oauth      : true,
-                xfbml      : true,
-                version    : 'v2.8'
-            });
-            FB.getLoginStatus(function(response) {
-                if (response.status === 'connected') {
-                    accessToken = response.authResponse.accessToken;
-                  //  document.getElementById('status').innerHTML = 'We are connected.';
-                   // document.getElementById('login').style.visibility = 'hidden';
-                } else if (response.status === 'not_authorized') {
-                   // document.getElementById('status').innerHTML = 'We are not logged in.'
-                } else {
-                  //  document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
-                }
-            });
-        };
-        (function(d, s, id){
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-        function fb_login() {
-            FB.login(function(response) {
-                if (response.status === 'connected') {
-                    accessToken = response.authResponse.accessToken;
-                    // document.getElementById('status').innerHTML = 'We are connected.';
-                    document.getElementById('post_fb_text').src="img/fb2.png";
-                    getInfo();
-                } else if (response.status === 'not_authorized') {
-                   // document.getElementById('status').innerHTML = 'We are not logged in.'
-                } else {
-                   // document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
-                }
-            }, {scope: 'publish_actions,publish_stream,user_photos,photo_upload,share_item,user_videos'});
-        }
-        // getting basic user info
-        function getInfo() {
-            FB.api('/me', 'GET', {fields: 'first_name,last_name,name,id'}, function(response) {
-              //  document.getElementById('status').innerHTML = response.name;
-                if(response){
-                    fb_post();
-                }
-               // alert("Hello! I am in get info");
-            });
-        }
-        // posting on user timeline
-        function fb_post() {
-            if(document.getElementsByName('post_text_value').value!=""){
-                if(document.getElementsByName('post_text_hashtag').value!="") {
-                    var hashValue = document.getElementById('post_text_hashtag').value.split(',');
-                    var hashtags = '#'+hashValue.join('\n#');
-                }
-                else{
-                    var hashtags="";
-                }
-
-                var wallPost = {
-                    message : document.getElementById('post_text_value').value+'\n'+hashtags
-                };
-
+<script>
+    // initialize and setup facebook js sdk
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '1893798254237418',
+            status     : true,
+            cookie     : true,
+            oauth      : true,
+            xfbml      : true,
+            version    : 'v2.8'
+        });
+        FB.getLoginStatus(function(response) {
+            if (response.status === 'connected') {
+                accessToken = response.authResponse.accessToken;
+                //  document.getElementById('status').innerHTML = 'We are connected.';
+                // document.getElementById('login').style.visibility = 'hidden';
+            } else if (response.status === 'not_authorized') {
+                // document.getElementById('status').innerHTML = 'We are not logged in.'
+            } else {
+                //  document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
             }
-
-            FB.api('/me/feed', 'post', wallPost, function(response) {
-                if (!response || response.error) {
-                    alert('Error occured');
-                } else {
-                    alert('Post ID: ' + response);
-                }
-            });
-        }
-        //fb photo post  from pc
-
-        function fileUpload() {
-
-            var params = {};
-            params['message'] = 'Message';
-            params['name'] = 'Name';
-            params['description'] = 'Description';
-            params['link'] = 'http://apps.facebook.com/summer-mourning/';
-            params['picture'] = 'http://summer-mourning.zoocha.com/uploads/thumb.png';
-            params['caption'] = 'Caption';
-            FB.api('/me/albums' ,params,function(response) {
-
-                var album = response.data[0];
-               // Now, upload the image to first found album for easiness.
-                var action_url = 'https://graph.facebook.com/' + album.id + '/albums?access_token=' +  accessToken;
-                var form = document.getElementById('upload-photo-form');
-                form.setAttribute('action', action_url);
-
-                // This does not work because of security reasons. Choose the local file manually.
-                // var file = document.getElementById('upload-photo-form-file');
-                // file.setAttribute('value', "/Users/nseo/Desktop/test_title_03.gif")
-
-                form.submit();
-                if (!response || response.error) {
-                  alert('Error occured');
-               } else {
-                   alert('Post ID: ' + response);
-               }
-            });
-        }
-        //fb video up
-        function videoUpload(){
-            var fb = new FacebookClient("access_token");
-
-             parameters = new ExpandoObject();
-            parameters.source = new FacebookMediaObject { ContentType = "video/3gpp", FileName = "video.3gp" }.SetValue(File.ReadAllBytes(@"c:\video.3gp"));
-            parameters.title = "video title";
-            parameters.description = "video description";
-
-             result = fb.Post("/me/videos", parameters);
-            Console.WriteLine(result);
-        }
-        //Select post for fb (fb_login) function
-
-        $(function () {
-            $("#post_fb_text").click(function () {
-                fb_login();
-
-             //   alert("Hello! I am in post fb text!!");
-            });
         });
-        $(function () {
-            $("#post_fb_photo").click(function () {
-                fileUpload();
-                document.getElementById('post_fb_photo').src="img/fb2.png";
-
-                //   alert("Hello! I am in post fb text!!");
-            });
+    };
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    function fb_login() {
+        FB.login(function(response) {
+            if (response.status === 'connected') {
+                accessToken = response.authResponse.accessToken;
+                // document.getElementById('status').innerHTML = 'We are connected.';
+                document.getElementById('post_fb_text').src="img/fb2.png";
+                getInfo();
+            } else if (response.status === 'not_authorized') {
+                // document.getElementById('status').innerHTML = 'We are not logged in.'
+            } else {
+                // document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
+            }
+        }, {scope: 'publish_actions,user_photos'});
+    }
+    // getting basic user info
+    function getInfo() {
+        FB.api('/me', 'GET', {fields: 'first_name,last_name,name,id'}, function(response) {
+            //  document.getElementById('status').innerHTML = response.name;
+            if(response){
+                fb_post();
+            }
+            // alert("Hello! I am in get info");
         });
-
-    </script>
+    }
+    // posting on user timeline
+    function fb_post() {
+        if(document.getElementsByName('post_text_value').value!=""){
+            if(document.getElementsByName('post_text_hashtag').value!="") {
+                var hashValue = document.getElementById('post_text_hashtag').value.split(',');
+                var hashtags = '#'+hashValue.join('\n#');
+            }
+            else{
+                var hashtags="";
+            }
+            var wallPost = {
+                message : document.getElementById('post_text_value').value+'\n'+hashtags
+            };
+        }
+        FB.api('/me/feed', 'post', wallPost, function(response) {
+            if (!response || response.error) {
+                alert('Error occured');
+            } else {
+                alert('Post ID: ' + response);
+            }
+        });
+    }
+    //fb photo post  from pc
+    function fileUpload() {
+        var wallPost = {
+            description : 'asdsasad'
+        };
+        FB.api('/me/albums', function(response) {
+            var album = response.data[0];
+            // Now, upload the image to first found album for easiness.
+            var action_url = 'https://graph.facebook.com/' + album.id + '/photos?access_token=' +  accessToken;
+            var form = document.getElementById('upload-photo-form');
+            form.setAttribute('action', action_url);
+            // This does not work because of security reasons. Choose the local file manually.
+            // var file = document.getElementById('upload-photo-form-file');
+            // file.setAttribute('value', "/Users/nseo/Desktop/test_title_03.gif")
+            form.submit();
+            if (!response || response.error) {
+                alert('Error occured');
+            } else {
+                alert('Post ID: ' + response);
+            }
+        });
+    }
+    //Select post for fb (fb_login) function
+    $(function () {
+        $("#post_fb_text").click(function () {
+            fb_login();
+            //   alert("Hello! I am in post fb text!!");
+        });
+    });
+    $(function () {
+        $("#post_fb_photo").click(function () {
+            fileUpload();
+            //   alert("Hello! I am in post fb text!!");
+        });
+    });
+</script>
 
 
 <div class="dashboard_body row">
@@ -208,25 +179,25 @@
     <div class="col-xs-9">
         <div class="dash_contents">
             @if (session('status'))
-                <div class="alert alert-success alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert"
-                            aria-hidden="true">
-                        &times;
-                    </button>
-                    {{ session('status') }}
-                </div>
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert"
+                        aria-hidden="true">
+                    &times;
+                </button>
+                {{ session('status') }}
+            </div>
 
             @endif
-                @if (session('failed'))
-                    <div class="alert alert-danger alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert"
-                                aria-hidden="true">
-                            &times;
-                        </button>
-                        {{ session('failed') }}
-                    </div>
+            @if (session('failed'))
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert"
+                        aria-hidden="true">
+                    &times;
+                </button>
+                {{ session('failed') }}
+            </div>
 
-                @endif
+            @endif
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#images"><b>Images</b></a></li>
                 <li><a data-toggle="tab" href="#vedios"><b>Vedios</b></a></li>
@@ -237,7 +208,7 @@
             <div class="tab-content">
                 <div id="images" class="tab-pane fade in active dash_tab_content">
                     <form class="form-horizontal text-justify" target="upload_iframe" id="upload-photo-form" role="form" method="post" action="photoUpload" enctype="multipart/form-data">
-                           {!! csrf_field() !!}
+                        {!! csrf_field() !!}
                         <h2>Well,</h2> So, I was talking about posting an image and the link of that image is:
                         <input type="file" class="" id="post_photo_link" name="post_photo_link" placeholder="image link" style="">
                         and plz add
@@ -261,10 +232,10 @@
 
                 </div>
                 <div id="vedios" class="tab-pane fade dash_tab_content">
-                    <form class="form-horizontal" role="form" methode="post" action="" enctype="multipart/form-data">
+                    <form class="form-horizontal" role="form" methode="post" action="">
 
                         <h2>Well,</h2> So, I was talking about posting a video and the link of that video is:
-                        <input type="file" class="" id="post_video_link" name="post_photo_link" placeholder="image link" style="">
+                        <input type="text" class="dash_input" id="imagelink" name="imagelink" placeholder="video link" style="">
                         and plz add
                         <input type="text" class="dash_input" id="imagetext" name="imagetext" placeholder="any caption for video" style="">
                         this caption with that video. O, totally forgot about one more thing, hashtags. Plz add these hashtags
@@ -308,5 +279,5 @@
 @endforeach
 
 </body>
-</html>
+</html
 @endsection
