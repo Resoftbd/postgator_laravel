@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
     <link href="{{asset('font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
-    
+
 
 </head>
 

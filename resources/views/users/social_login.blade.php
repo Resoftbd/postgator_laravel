@@ -15,6 +15,64 @@
     <link href="{{asset('font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
 
 
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.5b1.js"></script>
+    <script type="text/javascript" src="//platform.linkedin.com/in.js">
+        api_key: 81z2njy7sm7tbm
+        authorize: true
+        onLoad: onLinkedInLoad
+    </script>
+
+    <script type="text/javascript">
+
+        // Setup an event listener to make an API call once auth is complete
+        function onLinkedInLoad() {
+            IN.Event.on(IN, "auth", getProfileData);
+
+
+            $('a[id*=li_ui_li_gen_]').html('<img src="img/linkedin.png"class="chobi" style="margin-top:12px;">');
+
+        }
+
+        // Handle the successful return from the API call
+        function onSuccess(data) {
+            console.log(data);
+        }
+
+        // Handle an error response from the API call
+        function onError(error) {
+            console.log(error);
+        }
+
+        // Use the API call wrapper to request the member's basic profile data
+        function getProfileData() {
+            //IN.API.Raw("/people/~").result(onSuccess).error(onError);
+            IN.API.Profile('me').fields([
+                'first-name','id', 'last-name', // Add these to get the name
+                'industry', 'date-of-birth', 'educations:(id,school-name)',
+                'positions' // Add this one to get the job history
+            ])
+                    .result(displayProfiles);
+        }
+        function displayProfiles(profiles) {
+            var member = profiles.values[0];
+
+            document.getElementById("linked_id").value = member.id;
+            document.getElementsByClassName('IN-widget').src="img/linkedin2.png"
+
+
+
+        }
+
+        $(function () {
+            $("#linkedin_login").click(function () {
+                onLinkedInLoad();
+            });
+        });
+
+    </script>
+
+
 </head>
 
 
@@ -172,13 +230,19 @@
     <input type="hidden" id ="fb_name" name="users_fb_name" value="">
     <input type="hidden" id ="fb_photo" name="users_fb_photo" value="">
     <input type="hidden" id ="google_id" name="users_google_id" value="">
+    <input type="hidden" id ="linked_id" name="users_linkedin_id" value="">
     <li style="list-style:none; display:inline-block;"><img src="img/Facebook.png"  id="login" class="chobi"> </li>
     <li style="list-style:none; display:inline-block;"><img src="img/googleplus.png" id ="google_login" class="chobi"> </li>
     <li style="list-style:none; display:inline-block;"><img src="img/twitter.png" class="chobi"> </li>
+   <li style="list-style:none; display:inline-block;" id ="linkedin_login">
+       <script type="in/Login">
+
+       </script>
+   </li>
     <li style="list-style:none; display:inline-block;"><img src="img/instagram.png" class="chobi"> </li>
-    <li style="list-style:none; display:inline-block;"><img src="img/wordPress.png" class="chobi"> </li>
 
     </ul>
+        <div id="profiles"></div>
     <br><br><br><br>
     <button type="submit" class="btn btn-info text-center" style="border-radius:5vh; width:9vw; height:6vh; margin:5vh 45.5vw; text-shadow:1px 1px 1px #355;" > <b>Done</b> </button>
 </form>

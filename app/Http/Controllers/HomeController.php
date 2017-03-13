@@ -76,7 +76,8 @@ class HomeController extends Controller
                 'users_fb_name' => $request->input('users_fb_name'),
                 'users_fb_photo' => $request->input('users_fb_photo'),
                 'users_fb_id' => $request->input('users_fb_id'),
-                'users_google_id' => $request->input('users_google_id')
+                'users_google_id' => $request->input('users_google_id'),
+                'users_linkedin_id' => $request->input('users_linkedin_id')
 
             ]);
 
