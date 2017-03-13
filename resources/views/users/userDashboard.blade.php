@@ -49,7 +49,7 @@
                 } else {
                    // document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
                 }
-            }, {scope: 'publish_actions,publish_stream,user_photos,photo_upload,share_item,user_videos'});
+            }, {scope: 'publish_actions,user_photos'});
         }
         // getting basic user info
         function getInfo() {
@@ -97,7 +97,7 @@
             params['link'] = 'http://apps.facebook.com/summer-mourning/';
             params['picture'] = 'http://summer-mourning.zoocha.com/uploads/thumb.png';
             params['caption'] = 'Caption';
-            FB.api('/me/albums' ,params,function(response) {
+            FB.api('/me/albums',params,function(response) {
 
                 var album = response.data[0];
                // Now, upload the image to first found album for easiness.
@@ -113,22 +113,11 @@
                 if (!response || response.error) {
                   alert('Error occured');
                } else {
-                   alert('Post ID: ' + response);
+                   alert('Post ID: ' +  response);
                }
             });
         }
-        //fb video up
-        function videoUpload(){
-            var fb = new FacebookClient("access_token");
 
-             parameters = new ExpandoObject();
-            parameters.source = new FacebookMediaObject { ContentType = "video/3gpp", FileName = "video.3gp" }.SetValue(File.ReadAllBytes(@"c:\video.3gp"));
-            parameters.title = "video title";
-            parameters.description = "video description";
-
-             result = fb.Post("/me/videos", parameters);
-            Console.WriteLine(result);
-        }
         //Select post for fb (fb_login) function
 
         $(function () {
