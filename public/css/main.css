@@ -1,5 +1,4 @@
-body{ height:100vh; overflow: hidden; padding-top:14vh; font-family: 'Arvo', serif;
-}
+body{ height:100vh; overflow: hidden; padding-top:14vh; font-family: 'Arvo', serif;}
 
 #grad {
     background: -webkit-linear-gradient(#563D7D, #6E5398); /* For Safari 5.1 to 6.0 */
@@ -33,7 +32,7 @@ body{ height:100vh; overflow: hidden; padding-top:14vh; font-family: 'Arvo', ser
 .suggestion_para{list-style:none; width:36vw; margin:10vh 36vw; padding:2vw 5vh; color:#f9f9f9; font-size:40px; font-family: 'Cookie', cursive;}
 
 .log_social{list-style:none; border-radius:5vw; display:inline-block; width:60vw; margin:-30vh 20vw; padding:2vw 5vh; background: rgba(244,244,244,0.1);}
-.chobi{height:62px; width:62px; border-radius:31px; margin-top:-24px; box-shadow:0px 0px 0px #335; margin-right:41px; margin-left:42px;
+.chobi{height:62px; width:62px; border-radius:31px; margin-top:-4px; box-shadow:0px 0px 0px #335; margin-right:41px; margin-left:42px;
         transition: height 0.4s, width 0.4s, margin-top 0.4s, margin-right 0.4s, margin-left 0.4s,  box-shadow 0.4s;}
 .chobi:hover{height:64px; width:64px; margin-top:-6px; margin-right:40px; margin-left:41px; box-shadow:-4px 4px 4px #446;}
 
@@ -53,6 +52,10 @@ body{ height:100vh; overflow: hidden; padding-top:14vh; font-family: 'Arvo', ser
 
 .dash_input{ border:none; outline:none; height:29px; padding-left:5px; width:215px; border-bottom:1px dashed #777; background: #ddd;color:#000; transition: width 0.5s;}
 .dash_input:focus{outline: 0px; width:295px; padding-left:1px;}
+
+.dashs_input{ border:none; outline:none; height:29px; padding-left:5px; width:215px; border-bottom:1px dashed #777; background: #ddd;color:#000; transition: width 0.25s;}
+.dashs_input:focus{outline: 0px; width:225px; padding-left:1px;}
+
 
 ::-webkit-scrollbar {width: 10px; z-index:10000; margin-right:10px!important;}
 ::-webkit-scrollbar-track {

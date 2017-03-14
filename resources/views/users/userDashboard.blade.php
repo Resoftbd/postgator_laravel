@@ -204,6 +204,7 @@
                 <li class="active"><a data-toggle="tab" href="#images"><b>Images</b></a></li>
                 <li><a data-toggle="tab" href="#vedios"><b>Vedios</b></a></li>
                 <li><a data-toggle="tab" href="#texts"><b>Texts</b></a></li>
+                <li><a data-toggle="tab" href="#edpro"><b>Profile</b></a></li>
             </ul><br>
 
 
@@ -212,7 +213,10 @@
                     <form class="form-horizontal text-justify" target="upload_iframe" id="upload-photo-form" role="form" method="post" action="photoUpload" enctype="multipart/form-data">
                         {!! csrf_field() !!}
                         <h2>Well,</h2> So, I was talking about posting an image and the link of that image is:
-                        <input type="file" class="" id="post_photo_link" name="post_photo_link" placeholder="image link" style="">
+                        <label for="file-input">
+                            <img src="img/cam.png" title="browse an image" style="height:38px; width:40px;cursor:pointer"/>
+                        </label>
+                        <input id="file-input" type="file" style="display:none;"/>
                         and plz add
                         <input type="text" class="dash_input" id="post_photo_caption" name="post_photo_caption" placeholder="any caption for image" style="">
                         this caption with that image. O, totally forgot about one more thing, hashtags. Plz add these hashtags
@@ -234,7 +238,7 @@
 
                 </div>
                 <div id="vedios" class="tab-pane fade dash_tab_content">
-                    <form class="form-horizontal" role="form" methode="post" action="">
+                    <form class="form-horizontal text-justify" role="form" methode="post" action="">
 
                         <h2>Well,</h2> So, I was talking about posting a video and the link of that video is:
                         <input type="text" class="dash_input" id="imagelink" name="imagelink" placeholder="video link" style="">
@@ -273,6 +277,36 @@
                         <button type="submit" id="post_on" class="btn btn-info pull-right" style="border-radius: 19px; font-size:17px; background:#00A5CF;">Publish</button>
                     </form>
                 </div>
+
+                        <div id="edpro" class="tab-pane fade dash_tab_content">
+                            <form class="form-horizontal text-justify" role="form" method="post" action="postText" id="post_text">
+                                {{csrf_field()}}
+                                <h2>Hello,</h2> I'm
+                                <input type="text" class="dashs_input" id="edpro_value" name="edpro_value" placeholder="any name" style="">
+                                and my email is:
+                                <input type="email" class="dashs_input" name="edpro_email" id="edpro_email" placeholder="new email">
+                                .
+                                I want to change my previous password, which was
+                                <input type="password" class="dashs_input" name="edpro_pass_old" id="edpro_pass_old" placeholder="old password">
+
+                                and the new password will be:
+                                <input type="password" class="dashs_input" name="edpro_pass_new1" id="edpro_pass_new1" placeholder="new password">
+                                .
+                                Let me confirm you again, my new password will be:
+                                <input type="password" class="dashs_input" name="edpro_pass_new2" id="edpro_pass_new2" placeholder="new password">
+                                .
+                                By the way, I need to change my social media account(s) of
+                                <usl style="width:840px; margin-left:10px; margin-top:-10px">
+                                    <li style="list-style:none; display:inline-block;"><img  id ="post_fb_text" src="img/Facebook.png" class="chobigulo"> </li>
+                                    <li style="list-style:none; display:inline-block;"><img src="img/googleplus.png" class="chobigulo"> </li>
+                                    <li style="list-style:none; display:inline-block;"><img src="img/twitter.png" class="chobigulo"> </li>
+                                    <li style="list-style:none; display:inline-block;"><img src="img/instagram.png" class="chobigulo"> </li>
+                                    <li style="list-style:none; display:inline-block;"><img src="img/wordPress.png" class="chobigulo"> </li>
+                                </usl>
+                                <br><br>
+                                <button type="submit" id="post_on" class="btn btn-info pull-right" style="border-radius: 19px; font-size:17px; background:#00A5CF;">Publish</button>
+                            </form>
+                        </div>
             </div>
         </div>
     </div>
