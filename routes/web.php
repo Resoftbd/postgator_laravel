@@ -26,7 +26,7 @@ Route::get('/logout', function()
 Route::get('/user_menu', array('before' => 'auth.basic', function()
 {
     if (Auth::check()) {
-        return Redirect::to('/user_menu');
+        return Redirect::to('/dashboard');
     } else {
         return Redirect::to('/login');
     }
@@ -47,8 +47,7 @@ Route::get('/social_auth', array('before' => 'auth.basic', function()
 
 Route::get('/social_auth', 'HomeController@index');
 Route::post('user_auth',['as' => 'user_auth', 'uses' => 'HomeController@user_auth']);
-//Route::post('/user_auth', 'HomeController@user_auth');
-Route::get('/user_menu', 'HomeController@user_menu');
+Route::post('/updateProfile', 'HomeController@update_profile');
 Route::get('/do_login', 'HomeController@do_login');
 Route::post('/socialInfo', 'HomeController@social_info');
 Route::post('/postText', 'HomeController@post_text');

@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/postgator_laravel.iml" filepath="$PROJECT_DIR$/.idea/postgator_laravel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/postgator.iml" filepath="$PROJECT_DIR$/.idea/postgator.iml" />
     </modules>
   </component>
 </project>
-

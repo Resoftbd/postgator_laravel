@@ -48,7 +48,7 @@
 
 <div class="search_option">
     <form>
-        <button type="submit"><i class="fa fa-search"></i></button>&nbsp<input type="text" placeholder="search"><br><br>
+        <button type="submit"><i class="fa fa-search"></i></button>&nbsp<input type="text" placeholder="Google search"><br><br>
         get posts from last <select>
             <option>1 day</option>
             <option>1 month</option>
@@ -62,8 +62,8 @@
     <button type="button" onclick="myY"><i class="fa fa-cogs"></i></button>&nbsp
     <ul style="padding-left:50px; list-style: none; margin-top:-30px;">
         <!--MODAL LINK-->
-        <li style="padding:5px;"><b><a href="#myModal" data-toggle="modal" data-target="#myModal">Edit Profile</a></b></li>
-        <li  style="padding:5px;"><b>Log out</b></li></a>
+        {{--<li style="padding:5px;"><b><a href="#myModal" data-toggle="modal" data-target="#myModal">Edit Profile</a></b></li>--}}
+        <li  style="padding:20px;"><b>Log out</b></li></a>
     </ul>
 </div>
 

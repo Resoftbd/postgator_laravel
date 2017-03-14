@@ -279,21 +279,36 @@
                 </div>
 
                         <div id="edpro" class="tab-pane fade dash_tab_content">
-                            <form class="form-horizontal text-justify" role="form" method="post" action="postText" id="post_text">
+                            @if (count($errors) > 0)
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <form class="form-horizontal text-justify" role="form" method="post" action="updateProfile" id="post_text">
                                 {{csrf_field()}}
+                                <input type="hidden" id ="fb_user" name="users_id" value ="{{$data['_id']}}">
+                                <input type="hidden" id ="fb_id" name="users_fb_id" value="">
+                                <input type="hidden" id ="fb_name" name="users_fb_name" value="">
+                                <input type="hidden" id ="fb_photo" name="users_fb_photo" value="">
+                                <input type="hidden" id ="google_id" name="users_google_id" value="">
+                                <input type="hidden" id ="linked_id" name="users_linkedin_id" value="">
                                 <h2>Hello,</h2> I'm
-                                <input type="text" class="dashs_input" id="edpro_value" name="edpro_value" placeholder="any name" style="">
+                                <input type="text" class="dashs_input"  value="{{$data['users_fb_name']}}" id="edpro_value" name="users_fb_name" placeholder="any name" style="">
                                 and my email is:
-                                <input type="email" class="dashs_input" name="edpro_email" id="edpro_email" placeholder="new email">
+                                <input type="email" class="dashs_input" name="users_email"  value="{{$data['email']}}" id="users_fb_email" placeholder="new email">
                                 .
                                 I want to change my previous password, which was
-                                <input type="password" class="dashs_input" name="edpro_pass_old" id="edpro_pass_old" placeholder="old password">
+                                <input type="password" class="dashs_input" name="OldPassword" id="edpro_pass_old" placeholder="old password">
 
                                 and the new password will be:
-                                <input type="password" class="dashs_input" name="edpro_pass_new1" id="edpro_pass_new1" placeholder="new password">
+                                <input type="password" class="dashs_input" name="password" id="edpro_pass_new1" placeholder="new password">
                                 .
                                 Let me confirm you again, my new password will be:
-                                <input type="password" class="dashs_input" name="edpro_pass_new2" id="edpro_pass_new2" placeholder="new password">
+                                <input type="password" class="dashs_input" name="password_confirmation" id="edpro_pass_new2" placeholder="Retype password">
                                 .
                                 By the way, I need to change my social media account(s) of
                                 <usl style="width:840px; margin-left:10px; margin-top:-10px">

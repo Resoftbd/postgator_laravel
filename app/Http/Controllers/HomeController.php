@@ -51,7 +51,7 @@ class HomeController extends Controller
             // attempt to do the login
         $user = DB::collection('users')->where(array('users_name'=>$users_email,'users_password'=>$users_password))->get();
         if($user){
-            return redirect('user_menu');
+            return redirect('dashboard');
         }
         else{
             return redirect('login')->with('errors', 'Sorry!!Wrong email or password!');
@@ -61,12 +61,7 @@ class HomeController extends Controller
     }
 
 
-    public function user_menu()
-    {
-        $id = Auth::id();
-        session(['users_id' => $id]);
-        return view('users.menu');
-    }
+
     public function social_info(Request $request)
     {
 
@@ -83,9 +78,34 @@ class HomeController extends Controller
 
         return redirect()->action('HomeController@dashboard');
     }
+    public function update_profile(array $request)
+    {
+
+//        return Validator::make($request, [
+//            'OldPassword' => 'required|pwdvalidation',
+//            'users_name' => 'required|max:255',
+//            'email' => 'required|email|max:255|unique:users',
+//            'password' => 'required|min:6|confirmed',
+//        ]);
+        $id = $request->input('users_id');
+        DB::collection('users')->where('_id', $id)
+            ->update([
+                'users_fb_name' => $request->input('users_fb_name'),
+                'users_fb_photo' => $request->input('users_fb_photo'),
+                'users_fb_id' => $request->input('users_fb_id'),
+                'users_google_id' => $request->input('users_google_id'),
+                'users_email' => $request->input('users_email'),
+                'password' => $request->input('password'),
+                'users_linkedin_id' => $request->input('users_linkedin_id')
+
+            ]);
+
+        return redirect()->action('HomeController@dashboard');
+    }
     public function dashboard()
     {
-        $id = session('users_id');
+        $id = Auth::id();
+        session(['users_id' => $id]);
         $user = DB::collection('users')->where('_id',$id)->get();
         return view('users.userDashboard', compact('user'));
 
