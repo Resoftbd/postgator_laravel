@@ -19,13 +19,18 @@
 
 <style>
     .search_option{position:fixed; top:75px; right:-195px; height:40px; z-index:10;overflow:hidden; font-family: 'Cookie', cursive; transition:height 1s, right 1s; border-radius:2px; background:rgba(1,1,1,0.65);color:#eee; padding:6px 8px;}
-    .search_option:hover{position:fixed; top:75px; right:0px; height:130px;}
+    .search_option:hover{position:fixed; top:75px; right:0px; height:175px;}
     .search_option input,.search_option button,.search_option option,.search_option select{color:#111;}
-    .other_option{position:fixed; top:122px; right:-110px; height:40px;font-family: 'Cookie', cursive; z-index:1; overflow:hidden; transition:height 1s, right 1s; border-radius:2px; background:rgba(1,1,1,0.65);color:#eee; padding:6px 7px;}
-    .other_option:hover{position:fixed; top:122px; right:0px; height:67px;}
+    .other_option{position:fixed; top:122px; right:-75px; height:40px;font-family: 'Cookie', cursive; z-index:1; overflow:hidden; transition:height 1s, right 1s; border-radius:2px; background:rgba(1,1,1,0.65);color:#eee; padding:6px 7px;}
+    .other_option:hover{position:fixed; top:122px; right:0px; height:40px;}
     .other_option button{color:#121;}
     .other_option ul a{color:#ccc;}
     .other_option ul a:hover{color:#fff; text-decoration:none;}
+    input.gsc-input { width:162px!important; color: #555!important; margin:0px; padding:-3px 1px!important; height:16px!important;}
+    input.gsc-search-button {background: #555; color:#eee; width:20px!important; margin-left:-10px!important;}
+    form.gsc-search-box { color:#222;margin:0px; margin-top:-2px!important; padding-top:-2px!important; height:20px!important;}
+    div.gsc-control-cse {width:231px; height:28px; padding:2px 2px; margin:0px; overflow:hidden!important;}
+
 </style>
 
 
@@ -47,23 +52,31 @@
 @show
 
 <div class="search_option">
+
     <form>
-        <button type="submit"><i class="fa fa-search"></i></button>&nbsp<input type="text" placeholder="Google search"><br><br>
-        get posts from last <select>
+        <div class="dashboard_body"> <gcse:search></gcse:search><br><br></div>
+        get posts from last
+
+        <select>
             <option>1 day</option>
             <option>1 month</option>
             <option>1 year</option>
         </select>or <br><br>
-        get posts about <input type="text" placeholder="hashtag value" style="width:110px"><br><br>
+        get posts about <input type="text" placeholder="hashtag value" style="width:102px">
+
+
+
+
     </form>
 </div>
 
 <div class="other_option">
-    <button type="button" onclick="myY"><i class="fa fa-cogs"></i></button>&nbsp
+    <button type="button" onclick="myY"><i class="fa fa-sign-out"></i></button>&nbsp
     <ul style="padding-left:50px; list-style: none; margin-top:-30px;">
         <!--MODAL LINK-->
         {{--<li style="padding:5px;"><b><a href="#myModal" data-toggle="modal" data-target="#myModal">Edit Profile</a></b></li>--}}
-        <li  style="padding:20px;"><b>Log out</b></li></a>
+
+        <li  style="padding:7px 2px;"><b>Log out</b></li></a>
     </ul>
 </div>
 <script>
@@ -77,6 +90,8 @@
         s.parentNode.insertBefore(gcse, s);
     })();
 </script>
-<div><gcse:search></gcse:search></div>
+{{--<button type="submit"><i class="fa fa-search"></i></button>&nbsp<input type="text" placeholder="Google search">--}}
+
+
 
 @yield('content')
