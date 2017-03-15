@@ -45,7 +45,7 @@
                 <img src="img/jj.png" style="height:4vw; width:4vw; padding:0.5vw; border-radius:2vw;">
             </div>
             <div class="col-xs-6">
-                <a href="logout">  <img src="{{$data['users_fb_photo']}}" class="pull-right" style="height:4vw; width:4vw; padding:0.5vw; border-radius:2vw;"></a>
+                <a href="">  <img src="{{$data['users_fb_photo']}}" class="pull-right" style="height:4vw; width:4vw; padding:0.5vw; border-radius:2vw;"></a>
             </div>
         </div>
     @endforeach
@@ -76,7 +76,7 @@
         <!--MODAL LINK-->
         {{--<li style="padding:5px;"><b><a href="#myModal" data-toggle="modal" data-target="#myModal">Edit Profile</a></b></li>--}}
 
-        <li  style="padding:7px 2px;"><b>Log out</b></li></a>
+       <a href="logout"> <li  style="padding:7px 2px;"><b>Log out</b></li></a>
     </ul>
 </div>
 <script>
