@@ -66,5 +66,17 @@
         <li  style="padding:20px;"><b>Log out</b></li></a>
     </ul>
 </div>
+<script>
+    (function() {
+        var cx = '007860564312796620469:dxpfzztxz_s';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+    })();
+</script>
+<div><gcse:search></gcse:search></div>
 
 @yield('content')

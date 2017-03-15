@@ -179,6 +179,7 @@
 
     </div>
     <div class="col-xs-9">
+
         <div class="dash_contents">
             @if (session('status'))
             <div class="alert alert-success alert-dismissable">
